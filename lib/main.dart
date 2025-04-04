@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-// Commiting for test
+import 'package:Learnly/views/home/home_screen.dart';
+
+// renamed to home_screen
+
 void main() {
-  runApp(const MyApp()); 
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -11,27 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Center(
-            child: const Text( 
-              'Learnly',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          backgroundColor: Colors.deepOrange,
-        ),
-        body: const Center(
-          child: Text(
-            'Welcome to Learnly!',
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
+      title: 'Learnly',
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        brightness: Brightness.light,
       ),
+      home:  HomeScreen(),
     );
   }
 }
