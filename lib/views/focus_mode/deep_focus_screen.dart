@@ -41,7 +41,7 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
       body: TabBarView(
         controller: _tabController,
         children: const [
-          PomodoroTimer(),
+          PomodoroApp(),
           // DistractionBlocker(),
           // TaskManager(),
           // ProgressTracking(),
