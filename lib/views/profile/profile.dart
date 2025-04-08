@@ -17,7 +17,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     'phone': '+880 1234567890',
     'profileImage': null, // Will be an image file or URL later
   };
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
