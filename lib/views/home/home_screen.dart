@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dashboard_screen.dart';
-import 'profile_screen.dart';
+// import 'profile_screen.dart';
+import '../profile/profile.dart';
 import '../focus_mode/deep_focus_screen.dart';
 import '../ai_assistant/ai_screen.dart';
 
