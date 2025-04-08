@@ -27,8 +27,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _emailController = TextEditingController(text: widget.userData['email']);
     _usernameController = TextEditingController(text: widget.userData['username']);
     
-    // Parse phone number to get country code and number
-    final String fullPhone = widget.userData['phone'] ?? '+91 ';
+   
+    final String fullPhone = widget.userData['phone'] ?? '+880 ';
     final List<String> phoneParts = fullPhone.split(' ');
     _countryCode = phoneParts[0];
     _phoneController = TextEditingController(
@@ -80,7 +80,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
             icon: const Icon(Icons.check, color: Colors.green),
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                // Save data and return to profile page
                 final updatedUserData = {
                   'name': _nameController.text,
                   'email': _emailController.text,
@@ -101,7 +100,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Profile Picture
               Center(
                 child: Stack(
                   children: [
@@ -138,7 +136,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               const SizedBox(height: 32),
               
-              // Name field
               const Text(
                 'Name',
                 style: TextStyle(
@@ -176,7 +173,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               const SizedBox(height: 20),
               
-              // Email field
               const Text(
                 'E mail address',
                 style: TextStyle(
@@ -210,13 +206,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your email';
                   }
-                  // Add more email validation if needed
                   return null;
                 },
               ),
               const SizedBox(height: 20),
               
-              // Username field
               const Text(
                 'User name',
                 style: TextStyle(
@@ -254,7 +248,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               const SizedBox(height: 20),
               
-              // Password field (just a placeholder as it's typically handled separately)
               const Text(
                 'Password',
                 style: TextStyle(
@@ -284,9 +277,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   fillColor: Colors.grey.shade50,
                   suffixIcon: const Icon(Icons.visibility_off),
                 ),
-                readOnly: true, // Since password changes typically require verification
+                readOnly: true,
                 onTap: () {
-                  // Show password change dialog/screen
+        
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Password change functionality to be implemented')),
                   );
@@ -294,7 +287,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               const SizedBox(height: 20),
               
-              // Phone number field
+
               const Text(
                 'Phone number',
                 style: TextStyle(
@@ -306,7 +299,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Country code dropdown
+              
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
                     decoration: BoxDecoration(
@@ -314,15 +307,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.grey.shade50,
                     ),
-                    child: Row(
-                      children: [
-                        Text(_countryCode),
-                        const Icon(Icons.arrow_drop_down),
-                      ],
-                    ),
+                    child: Text('+880'),
                   ),
                   const SizedBox(width: 8),
-                  // Phone number field
+                  
                   Expanded(
                     child: TextFormField(
                       controller: _phoneController,
@@ -358,49 +346,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2, // Profile tab
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        onTap: (index) {
-          // Handle navigation but with warning about unsaved changes
-          if (index != 2) {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('Unsaved Changes'),
-                content: const Text('You have unsaved changes. Do you want to discard them?'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Stay'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context); // Close dialog
-                      Navigator.pop(context); // Go back to profile page
-                      // Navigate to other tabs would go here
-                    },
-                    child: const Text('Discard'),
-                  ),
-                ],
-              ),
-            );
-          }
-        },
       ),
     );
   }
