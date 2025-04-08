@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
 import 'pomodoro_timer.dart'; // Assuming PomodoroScreen is in pomodoro_timer.dart
 import 'distraction_blocker.dart'; // Add your DistractionBlocker widget
-import 'task_manager.dart'; // Add your TaskManager widget
-import 'progress_tracking.dart'; // Add your ProgressTracking widget
+// Add your TaskManager widget
+// Add your ProgressTracking widget
 
 class DeepFocusScreen extends StatefulWidget {
   const DeepFocusScreen({Key? key}) : super(key: key);
@@ -21,13 +21,14 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> {
       'description': 'A timer to manage your focus sessions with short breaks.',
       'widget': const PomodoroScreen(),
     },
-    // {
-    //   'title': 'Blocker',
-    //   'icon': Icons.block,
-    //   'color': Colors.redAccent,
-    //   'description': 'Block distractions while you focus on your tasks.',
-    //   'widget': const DistractionBlocker(),
-    // },
+    {
+      'title': 'Blocker',
+      'icon': Icons.block,
+      'color': Colors.redAccent,
+      'description': 'Block distractions while you focus on your tasks.',
+      'widget': const DistractionBlocker(),
+    },
+    
     // {
     //   'title': 'Tasks',
     //   'icon': Icons.check_circle_outline,
