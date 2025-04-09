@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
 import 'pomodoro_timer.dart'; // Assuming PomodoroScreen is in pomodoro_timer.dart
 import 'distraction_blocker.dart'; // Add your DistractionBlocker widget
+import '../focus_mode/progress_tracking.dart';
 // Add your TaskManager widget
 // Add your ProgressTracking widget
 
@@ -36,13 +37,13 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> {
     //   'description': 'Manage and organize your daily tasks effectively.',
     //   'widget': const TaskManager(),
     // },
-    // {
-    //   'title': 'Progress',
-    //   'icon': Icons.show_chart,
-    //   'color': Colors.purpleAccent,
-    //   'description': 'Track your progress and review completed tasks.',
-    //   'widget': const ProgressTracking(),
-    // },
+    {
+      'title': 'Progress',
+      'icon': Icons.show_chart,
+      'color': Colors.purpleAccent,
+      'description': 'Track your progress and review completed tasks.',
+      'widget': const ProgressTrackerPage(),
+    },
   ];
 
   @override
