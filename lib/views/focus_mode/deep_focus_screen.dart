@@ -3,6 +3,7 @@ import '../utils/app_colors.dart';
 import 'pomodoro_timer.dart'; // Assuming PomodoroScreen is in pomodoro_timer.dart
 import 'distraction_blocker.dart'; // Add your DistractionBlocker widget
 import '../focus_mode/progress_tracking.dart';
+import '../focus_mode/deadLine_buddy.dart';
 // Add your TaskManager widget
 // Add your ProgressTracking widget
 
@@ -44,6 +45,14 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> {
       'description': 'Track your progress and review completed tasks.',
       'widget': const ProgressTrackerPage(),
     },
+     {
+  'title': 'Deadline Buddy',
+  'icon': Icons.alarm_on, // You can change this to any icon you like!
+  'color': Colors.deepOrangeAccent, 
+  'description': 'Never miss a due date with smart reminders and alerts.',
+  'widget': const DeadLineBuddy(),
+},
+
   ];
 
   @override
