@@ -16,23 +16,24 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
   bool _isTimerRunning = false;
   final TextEditingController _taskController = TextEditingController();
   final TextEditingController _subjectController = TextEditingController();
-  late Timer _timer; // Timer for live clock
-  String _currentTime = DateFormat('HH:mm:ss').format(DateTime.now()); // Initial time
+  late Timer _timer;
+  Duration _elapsed = Duration.zero;
 
   @override
   void initState() {
     super.initState();
-    // Start the timer to update the clock every second
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        _currentTime = DateFormat('HH:mm:ss').format(DateTime.now());
-      });
+      if (_isTimerRunning && _startTime != null) {
+        setState(() {
+          _elapsed = DateTime.now().difference(_startTime!);
+        });
+      }
     });
   }
 
   @override
   void dispose() {
-    _timer.cancel(); // Cancel the timer when the widget is disposed
+    _timer.cancel();
     _taskController.dispose();
     _subjectController.dispose();
     super.dispose();
@@ -42,6 +43,7 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
     if (_currentTask.isNotEmpty && !_isTimerRunning) {
       setState(() {
         _startTime = DateTime.now();
+        _elapsed = Duration.zero;
         _isTimerRunning = true;
       });
       _showSnackBar('✨ Timer started for "$_currentTask"');
@@ -67,6 +69,7 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
         _subjectController.clear();
         _startTime = null;
         _isTimerRunning = false;
+        _elapsed = Duration.zero;
       });
       _showSnackBar('🌟 Task completed & saved!');
     }
@@ -166,6 +169,7 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
   }
 
   Widget _buildTimerCard() {
+    String formattedElapsed = '${_elapsed.inHours.toString().padLeft(2, '0')}:${(_elapsed.inMinutes % 60).toString().padLeft(2, '0')}:${(_elapsed.inSeconds % 60).toString().padLeft(2, '0')}';
     return Container(
       decoration: _glassCardDecoration(),
       padding: const EdgeInsets.all(20),
@@ -182,7 +186,6 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
             ],
           ),
           const SizedBox(height: 20),
-          // Live Clock
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
@@ -193,10 +196,10 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.access_time_rounded, color: Colors.white, size: 24),
+                const Icon(Icons.timer_outlined, color: Colors.white, size: 24),
                 const SizedBox(width: 8),
                 Text(
-                  _currentTime,
+                  formattedElapsed,
                   style: const TextStyle(
                     fontSize: 24,
                     color: Colors.white,
