@@ -4,6 +4,7 @@ import 'pomodoro_timer.dart'; // Assuming PomodoroScreen is in pomodoro_timer.da
 import 'distraction_blocker.dart'; // Add your DistractionBlocker widget
 import '../focus_mode/progress_tracking.dart';
 import '../focus_mode/deadLine_buddy.dart';
+import 'challenge_yourself.dart';
 // Add your TaskManager widget
 // Add your ProgressTracking widget
 
@@ -52,6 +53,14 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> {
   'description': 'Never miss a due date with smart reminders and alerts.',
   'widget': const DeadLineBuddy(),
 },
+
+{
+  'title': 'Challenge Yourself',
+  'icon': Icons.star_border,
+  'color': Colors.blueAccent,
+  'description': 'Take on fun and engaging challenges to boost your focus and learning.',
+  'widget': const ChallengeYourself(),
+}
 
   ];
 

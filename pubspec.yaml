@@ -38,6 +38,9 @@ dependencies:
   provider: ^6.0.5
 
   fl_chart: ^0.63.0        # For the PieChart in Visual Progress Indicators
+  # Dependencies for challenge yourself
+  shared_preferences: ^2.1.1
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
