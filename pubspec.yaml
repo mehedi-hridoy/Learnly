@@ -42,6 +42,11 @@ dependencies:
   shared_preferences: ^2.1.1
   google_fonts: ^6.2.1
 
+  #login screen firebase
+  firebase_core: ^2.15.1
+  firebase_auth: ^4.15.3
+  google_sign_in: ^6.2.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -109,6 +114,7 @@ flutter:
     - assets/icons/baby_chicken.png
     - assets/icons/mid_chicken.png
     - assets/icons/mom_chicken.png
+    - assets/logo/google.jpg
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
