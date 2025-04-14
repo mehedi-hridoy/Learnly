@@ -17,7 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   bool isLoading = false;
 
-  // 🔐 Firebase Email/Password Login
+  // Firebase email and password login 
+
   Future<void> login() async {
     final email = emailController.text.trim();
     final password = passwordController.text;
@@ -37,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
         password: password,
       );
       
-      // No need to navigate - main.dart StreamBuilder will handle this
+      
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.message ?? "Login failed")),
@@ -51,12 +52,12 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  // 🔐 Google Sign-In
+  // Google Sing In
   Future<void> signInWithGoogle() async {
     setState(() => isLoading = true);
 
     try {
-      // Handle web platform differently
+      // For web
       if (kIsWeb) {
         GoogleAuthProvider googleProvider = GoogleAuthProvider();
         await FirebaseAuth.instance.signInWithPopup(googleProvider);
@@ -64,20 +65,21 @@ class _LoginScreenState extends State<LoginScreen> {
         // Mobile platforms
         final GoogleSignIn googleSignIn = GoogleSignIn();
         
-        // Clear any previous sign-in first
+        // It clears any previous signin by singing out 
         await googleSignIn.signOut();
         
         final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
         
         if (googleUser == null) {
           setState(() => isLoading = false);
-          return; // User canceled
+          return; // If user is  canceled
         }
 
-        // Get authentication details
+        // This does call's the thing and find the authentication details 
         final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-        // Create credential
+        // It creates the necessary credintial for a authenticated user 
+
         final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
@@ -86,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
         // Sign in with Firebase
         await FirebaseAuth.instance.signInWithCredential(credential);
         
-        // No need to navigate - main.dart StreamBuilder will handle this
+        
       }
     } catch (e) {
       print("Google Sign-In Error: $e"); // Debug log
@@ -100,7 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // New color palette from bankme image
+    
+
+    // Un Updated Color pallate choosing for the app Theme but kept it on here instead of having a different file 
+
     const Color primaryColor = Color(0xFF000000); // Black
     const Color secondaryColor = Color(0xFFE6E0F0); // Light purple/lavender
     const Color accentColor = Color(0xFFB8E8E0); // Mint/light teal
@@ -111,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          // Background decorative elements
+          // Background Design 
           Positioned(
             top: -100,
             left: -100,
