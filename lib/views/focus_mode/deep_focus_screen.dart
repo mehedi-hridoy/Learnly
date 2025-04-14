@@ -5,6 +5,7 @@ import 'distraction_blocker.dart'; // Add your DistractionBlocker widget
 import '../focus_mode/progress_tracking.dart';
 import '../focus_mode/deadLine_buddy.dart';
 import 'challenge_yourself.dart';
+import '../focus_mode/to_do_list.dart';
 // Add your TaskManager widget
 // Add your ProgressTracking widget
 
@@ -60,7 +61,15 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> {
   'color': Colors.blueAccent,
   'description': 'Take on fun and engaging challenges to boost your focus and learning.',
   'widget': const ChallengeYourself(),
-}
+},
+
+{
+      'title': 'ToDoList',
+      'icon': Icons.check_circle_outline,
+      'color': Colors.greenAccent,
+      'description': 'Manage and organize your daily tasks effectively.',
+      'widget': const ToDoList(),
+    },
 
   ];
 
