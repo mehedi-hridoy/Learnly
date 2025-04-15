@@ -1,128 +1,206 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../profile/profile.dart';
+
+
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
+
   @override
   Widget build(BuildContext context) {
+    // Enhanced color palette for a modern look
+    const Color primaryBackground = Color(0xFFF8F7FA); // Light Background
+    const Color cardBackground = Color(0xFFFFFFFF); // Pure White
+    const Color headerBackground = Color(0xFFE6E0F0); // Light Purple/Lavender
+    const Color primaryAccent = Color(0xFFB8E8E0); // Mint/Light Teal
+    const Color secondaryAccent = Color(0xFF8CCFC5); // Darker Mint
+    const Color primaryText = Color(0xFF000000); // Black
+    const Color secondaryText = Color(0xFF333333); // Dark Gray
+    const Color accentText = Color(0xFF5D5FEF); // Purple/Blue for emphasis
+
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: headerBackground,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(context),
-              const SizedBox(height: 24),
-              _buildDailyScore(),
-              const SizedBox(height: 24),
-              _buildMoodSelector(),
-              const SizedBox(height: 24),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      _buildTrackerGrid(),
-                      const SizedBox(height: 24),
-                      _buildRecentActivity(),
-                    ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildHeader(context, primaryText, secondaryText, secondaryAccent, cardBackground, accentText),
+            Expanded(
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: primaryBackground,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                  ),
+                ),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                  ),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 24),
+                          _buildDailyScore(primaryAccent, secondaryAccent, primaryText, secondaryText, cardBackground, accentText),
+                          const SizedBox(height: 24),
+                          _buildMoodSelector(primaryText, secondaryText, primaryAccent, secondaryAccent, accentText),
+                          const SizedBox(height: 24),
+                          _buildTrackerGrid(primaryAccent, secondaryAccent, primaryText, secondaryText, cardBackground, accentText),
+                          const SizedBox(height: 24),
+                          _buildRecentActivity(primaryAccent, secondaryAccent, primaryText, secondaryText, cardBackground, accentText),
+                          const SizedBox(height: 24),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProfileScreen(),
+
+  Widget _buildHeader(BuildContext context, Color primaryText, Color secondaryText, Color secondaryAccent, Color cardBackground, Color accentText) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProfileScreen(),
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: primaryText.withOpacity(0.1),
+                        blurRadius: 6,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
                   ),
-                );
-              },
-              child: Hero(
-                tag: 'profileImage',
-                child: CircleAvatar(
-                  radius: 24,
-                  backgroundColor: Colors.blue.shade100,
-                  backgroundImage: const AssetImage('assets/images/profile_placeholder.png'),
-                ),
-              ),
-            ),
-            const SizedBox(width: 16),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Welcome back,',
-                  style: TextStyle(
-                    color: Colors.grey.shade600,
-                    fontSize: 14,
-                  ),
-                ),
-                const Text(
-                  'Hridoy',
-                  style: TextStyle(
-                    color: Color(0xFF333333),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  child: CircleAvatar(
+                    radius: 24,
+                    backgroundColor: secondaryAccent,
+                    backgroundImage: const AssetImage('assets/images/profile_placeholder.png'),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: cardBackground, width: 2),
+                      ),
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(12),
               ),
-              child: IconButton(
-                icon: Icon(Icons.notifications_outlined, color: Colors.grey.shade700),
-                onPressed: () {},
+              const SizedBox(width: 12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Welcome back,',
+                    style: TextStyle(
+                      color: secondaryText,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'SFProDisplay',
+                    ),
+                  ),
+                  Text(
+                    'Hridoy',
+                    style: TextStyle(
+                      color: accentText,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'SFProDisplay',
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+          Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: cardBackground,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: primaryText.withOpacity(0.05),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.search, color: primaryText, size: 22),
+                  onPressed: () {},
+                ),
+              ),
+              const SizedBox(width: 10),
+              Container(
+                decoration: BoxDecoration(
+                  color: cardBackground,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: primaryText.withOpacity(0.05),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.notifications_outlined, color: primaryText, size: 22),
+                  onPressed: () {},
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildDailyScore() {
+
+  Widget _buildDailyScore(Color primaryAccent, Color secondaryAccent, Color primaryText, Color secondaryText, Color cardBackground, Color accentText) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF7bf609).withOpacity(0.8),
-            Color(0xFF7bf609).withOpacity(0.6),
-          ],
-        ),
+        color: cardBackground,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Color(0xFF7bf609).withOpacity(0.3),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
+            color: primaryText.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
           ),
         ],
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [cardBackground, cardBackground.withOpacity(0.9)],
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,43 +208,47 @@ class DashboardScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Daily Score',
                     style: TextStyle(
-                      color: Color(0xFF333333),
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+                      color: accentText,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'SFProDisplay',
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     'Your productivity summary',
                     style: TextStyle(
-                      color: Color(0xFF555555),
+                      color: secondaryText,
                       fontSize: 14,
+                      fontFamily: 'SFProDisplay',
                     ),
                   ),
                 ],
               ),
               CircularPercentIndicator(
-                radius: 36.0,
-                lineWidth: 10.0,
+                radius: 40.0,
+                lineWidth: 7.0,
                 animation: true,
+                animationDuration: 1500,
                 percent: 0.72,
-                center: const Text(
+                center: Text(
                   "72%",
                   style: TextStyle(
-                    color: Color(0xFF333333),
-                    fontWeight: FontWeight.bold,
+                    color: primaryText,
+                    fontWeight: FontWeight.w600,
                     fontSize: 18.0,
+                    fontFamily: 'SFProDisplay',
                   ),
                 ),
                 circularStrokeCap: CircularStrokeCap.round,
-                progressColor: Colors.white,
-                backgroundColor: Colors.white.withOpacity(0.3),
+                progressColor: primaryAccent,
+                backgroundColor: secondaryAccent.withOpacity(0.3),
               ),
             ],
           ),
@@ -177,8 +259,8 @@ class DashboardScreen extends StatelessWidget {
             animationDuration: 1500,
             percent: 0.72,
             barRadius: const Radius.circular(4),
-            progressColor: Colors.white,
-            backgroundColor: Colors.white.withOpacity(0.3),
+            progressColor: primaryAccent,
+            backgroundColor: secondaryAccent.withOpacity(0.3),
             padding: EdgeInsets.zero,
           ),
         ],
@@ -186,110 +268,159 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMoodSelector() {
+
+  Widget _buildMoodSelector(Color primaryText, Color secondaryText, Color primaryAccent, Color secondaryAccent, Color accentText) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'How are you feeling today?',
           style: TextStyle(
-            color: Color(0xFF333333),
-            fontSize: 16,
+            color: accentText,
+            fontSize: 18,
             fontWeight: FontWeight.w600,
+            fontFamily: 'SFProDisplay',
           ),
         ),
         const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        SizedBox(
+          height: 95,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            children: [
+              _buildMoodIcon('😃', primaryAccent, 'Great', primaryText, secondaryText),
+              const SizedBox(width: 14),
+              _buildMoodIcon('😊', secondaryAccent, 'Good', primaryText, secondaryText),
+              const SizedBox(width: 14),
+              _buildMoodIcon('😐', secondaryAccent, 'Okay', primaryText, secondaryText),
+              const SizedBox(width: 14),
+              _buildMoodIcon('😔', secondaryAccent, 'Low', primaryText, secondaryText),
+              const SizedBox(width: 14),
+              _buildMoodIcon('😴', secondaryAccent, 'Tired', primaryText, secondaryText),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  Widget _buildMoodIcon(String emoji, Color color, String label, Color primaryText, Color secondaryText) {
+    return Column(
+      children: [
+        Container(
+          width: 65,
+          height: 65,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: [
+              BoxShadow(
+                color: primaryText.withOpacity(0.08),
+                blurRadius: 8,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              emoji,
+              style: const TextStyle(fontSize: 30),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          label,
+          style: TextStyle(
+            color: secondaryText,
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'SFProDisplay',
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  Widget _buildTrackerGrid(Color primaryAccent, Color secondaryAccent, Color primaryText, Color secondaryText, Color cardBackground, Color accentText) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Your Progress',
+          style: TextStyle(
+            color: accentText,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'SFProDisplay',
+          ),
+        ),
+        const SizedBox(height: 16),
+        GridView.count(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisCount: 2,
+          childAspectRatio: 1.0,
+          crossAxisSpacing: 14,
+          mainAxisSpacing: 14,
           children: [
-            _buildMoodIcon('😃', Colors.amber, 'Great'),
-            _buildMoodIcon('😊', Colors.orange.shade300, 'Good'),
-            _buildMoodIcon('😐', Colors.blue.shade300, 'Okay'),
-            _buildMoodIcon('😔', Colors.purple.shade300, 'Low'),
-            _buildMoodIcon('😴', Colors.teal.shade300, 'Tired'),
+            _buildTrackerItem(
+              title: 'Study Progress',
+              value: '75%',
+              time: '3h today',
+              icon: Icons.school,
+              color: primaryAccent,
+              progressValue: 0.75,
+              primaryText: primaryText,
+              secondaryText: secondaryText,
+              cardBackground: cardBackground,
+              secondaryAccent: secondaryAccent,
+            ),
+            _buildTrackerItem(
+              title: 'Focus Time',
+              value: '2h 15m',
+              time: 'Today',
+              icon: Icons.timer,
+              color: secondaryAccent,
+              progressValue: 0.6,
+              primaryText: primaryText,
+              secondaryText: secondaryText,
+              cardBackground: cardBackground,
+              secondaryAccent: secondaryAccent,
+            ),
+            _buildTrackerItem(
+              title: 'Tasks Completed',
+              value: '9/12',
+              time: 'Today',
+              icon: Icons.check_circle,
+              color: primaryAccent,
+              progressValue: 0.75,
+              primaryText: primaryText,
+              secondaryText: secondaryText,
+              cardBackground: cardBackground,
+              secondaryAccent: secondaryAccent,
+            ),
+            _buildTrackerItem(
+              title: 'Distraction-Free',
+              value: '1h 30m',
+              time: 'Today',
+              icon: Icons.do_not_disturb_on,
+              color: secondaryAccent,
+              progressValue: 0.45,
+              primaryText: primaryText,
+              secondaryText: secondaryText,
+              cardBackground: cardBackground,
+              secondaryAccent: secondaryAccent,
+            ),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildMoodIcon(String emoji, Color color, String label) {
-    return Column(
-      children: [
-        Container(
-          width: 56,
-          height: 56,
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: color.withOpacity(0.3),
-              width: 2,
-            ),
-          ),
-          child: Center(
-            child: Text(
-              emoji,
-              style: const TextStyle(fontSize: 28),
-            ),
-          ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.grey.shade700,
-            fontSize: 12,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTrackerGrid() {
-    return GridView.count(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: 2,
-      childAspectRatio: 1.1,
-      crossAxisSpacing: 16,
-      mainAxisSpacing: 16,
-      children: [
-        _buildTrackerItem(
-          title: 'Study Progress',
-          value: '75%',
-          time: '3h today',
-          icon: Icons.school,
-          color: Colors.blue,
-          progressValue: 0.75,
-        ),
-        _buildTrackerItem(
-          title: 'Focus Time',
-          value: '2h 15m',
-          time: 'Today',
-          icon: Icons.timer,
-          color: Colors.purple,
-          progressValue: 0.6,
-        ),
-        _buildTrackerItem(
-          title: 'Tasks Completed',
-          value: '9/12',
-          time: 'Today',
-          icon: Icons.check_circle,
-          color: Colors.green,
-          progressValue: 0.75,
-        ),
-        _buildTrackerItem(
-          title: 'Distraction-Free',
-          value: '1h 30m',
-          time: 'Today',
-          icon: Icons.do_not_disturb_on,
-          color: Colors.red,
-          progressValue: 0.45,
-        ),
-      ],
-    );
-  }
 
   Widget _buildTrackerItem({
     required String title,
@@ -298,22 +429,27 @@ class DashboardScreen extends StatelessWidget {
     required IconData icon,
     required Color color,
     required double progressValue,
+    required Color primaryText,
+    required Color secondaryText,
+    required Color cardBackground,
+    required Color secondaryAccent,
   }) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardBackground,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: primaryText.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
           ),
         ],
-        border: Border.all(
-          color: Colors.grey.shade100,
-          width: 1,
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [cardBackground, cardBackground.withOpacity(0.95)],
         ),
       ),
       child: Column(
@@ -324,21 +460,23 @@ class DashboardScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   icon,
-                  color: color,
-                  size: 20,
+                  color: cardBackground,
+                  size: 18,
                 ),
               ),
               const Spacer(),
               Text(
                 time,
                 style: TextStyle(
-                  color: Colors.grey.shade600,
+                  color: secondaryText,
                   fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: 'SFProDisplay',
                 ),
               ),
             ],
@@ -347,26 +485,28 @@ class DashboardScreen extends StatelessWidget {
           Text(
             value,
             style: TextStyle(
-              color: Colors.grey.shade900,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+              color: primaryText,
+              fontSize: 22,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'SFProDisplay',
             ),
           ),
           const SizedBox(height: 4),
           Text(
             title,
             style: TextStyle(
-              color: Colors.grey.shade600,
+              color: secondaryText,
               fontSize: 14,
+              fontFamily: 'SFProDisplay',
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
           LinearPercentIndicator(
-            lineHeight: 4.0,
+            lineHeight: 6.0,
             percent: progressValue,
-            barRadius: const Radius.circular(2),
+            barRadius: const Radius.circular(3),
             progressColor: color,
-            backgroundColor: color.withOpacity(0.1),
+            backgroundColor: secondaryAccent.withOpacity(0.3),
             padding: EdgeInsets.zero,
           ),
         ],
@@ -374,19 +514,21 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRecentActivity() {
+
+  Widget _buildRecentActivity(Color primaryAccent, Color secondaryAccent, Color primaryText, Color secondaryText, Color cardBackground, Color accentText) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
+            Text(
               'Recent Activity',
               style: TextStyle(
-                color: Color(0xFF333333),
+                color: accentText,
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'SFProDisplay',
               ),
             ),
             TextButton(
@@ -394,8 +536,10 @@ class DashboardScreen extends StatelessWidget {
               child: Text(
                 'See All',
                 style: TextStyle(
-                  color: Color(0xFF7bf609),
-                  fontWeight: FontWeight.w600,
+                  color: primaryAccent,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'SFProDisplay',
                 ),
               ),
             ),
@@ -407,25 +551,35 @@ class DashboardScreen extends StatelessWidget {
           subtitle: '4 sessions × 25 minutes',
           time: '1h ago',
           icon: Icons.timer,
-          color: Colors.red,
+          color: primaryAccent,
+          primaryText: primaryText,
+          secondaryText: secondaryText,
+          cardBackground: cardBackground,
         ),
         _buildActivityItem(
           title: 'Blocked Distractions',
           subtitle: '15 attempts blocked',
           time: '2h ago',
           icon: Icons.block,
-          color: Colors.orange,
+          color: secondaryAccent,
+          primaryText: primaryText,
+          secondaryText: secondaryText,
+          cardBackground: cardBackground,
         ),
         _buildActivityItem(
           title: 'Earned Achievement',
           subtitle: 'Consistency Master',
           time: '3h ago',
           icon: Icons.emoji_events,
-          color: Colors.amber,
+          color: primaryAccent,
+          primaryText: primaryText,
+          secondaryText: secondaryText,
+          cardBackground: cardBackground,
         ),
       ],
     );
   }
+
 
   Widget _buildActivityItem({
     required String title,
@@ -433,58 +587,59 @@ class DashboardScreen extends StatelessWidget {
     required String time,
     required IconData icon,
     required Color color,
+    required Color primaryText,
+    required Color secondaryText,
+    required Color cardBackground,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 14),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        color: cardBackground,
+        borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
+            color: primaryText.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
           ),
         ],
-        border: Border.all(
-          color: Colors.grey.shade100,
-          width: 1,
-        ),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
+              color: color,
+              borderRadius: BorderRadius.circular(14),
             ),
             child: Icon(
               icon,
-              color: color,
-              size: 24,
+              color: cardBackground,
+              size: 20,
             ),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    color: Color(0xFF333333),
+                  style: TextStyle(
+                    color: primaryText,
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'SFProDisplay',
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 4),
                 Text(
                   subtitle,
                   style: TextStyle(
-                    color: Colors.grey.shade600,
+                    color: secondaryText,
                     fontSize: 14,
+                    fontFamily: 'SFProDisplay',
                   ),
                 ),
               ],
@@ -493,8 +648,10 @@ class DashboardScreen extends StatelessWidget {
           Text(
             time,
             style: TextStyle(
-              color: Colors.grey.shade500,
+              color: secondaryText,
               fontSize: 12,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'SFProDisplay',
             ),
           ),
         ],
