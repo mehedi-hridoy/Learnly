@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart'; 
-import 'time_tracker.dart'; //existing time tracker
+import 'time_tracker.dart';
 
 class ProgressTrackerPage extends StatefulWidget {
   const ProgressTrackerPage({super.key});
@@ -14,25 +14,40 @@ class _ProgressTrackerPageState extends State<ProgressTrackerPage> {
   int tasksCompleted = 0;
   int rewardPoints = 0;
 
-  // Sample weekly data
+  
   List<double> weeklyProgress = [2, 4, 3, 5, 1, 0, 3]; 
   
-
+ 
+  final Color primaryColor = const Color(0xFF78A2CC);    
+  final Color secondaryColor = const Color(0xFF9DC88D);   
+  final Color accentColor = const Color(0xFFE5BE7D);     
+  final Color textPrimaryColor = const Color(0xFF2E4053); 
+  final Color textSecondaryColor = const Color(0xFF5D6D7E);
+  final Color backgroundColor = const Color(0xFFF5F7FA);  
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 240, 242, 245), 
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: const Text('Progress Tracker', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-        backgroundColor: const Color.fromARGB(255, 240, 242, 245),
+        title: Text(
+          'Progress', 
+          style: TextStyle(
+            fontWeight: FontWeight.w600, 
+            color: textPrimaryColor,
+            fontSize: 18,
+          ),
+        ),
+        backgroundColor: backgroundColor,
         elevation: 0,
+        centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_circle_left_rounded, color: Color.fromARGB(255, 205, 154, 214)), 
+          icon: Icon(Icons.arrow_back_ios, color: primaryColor, size: 20), 
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.restart_alt_rounded, color: Color.fromARGB(255, 126, 28, 183)), 
+            icon: Icon(Icons.refresh, color: primaryColor, size: 20), 
             onPressed: () => setState(() {
               totalStudyHours = 0;
               tasksCompleted = 0;
@@ -45,117 +60,74 @@ class _ProgressTrackerPageState extends State<ProgressTrackerPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _buildSummaryCard(),
-              const SizedBox(height: 20),
+              _buildMetricsGrid(),
+              const SizedBox(height: 24),
               _buildWeeklyChart(),
-              const SizedBox(height: 20),
-              _buildActionButton(
-                context,
-                icon: Icons.watch_later_rounded,
-                label: 'Time Tracker',
-                color: const Color.fromARGB(255, 195, 114, 163), 
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const TimeTrackerPage()),
-                  );
-                },
-              ),
-              const SizedBox(height: 10),
-              _buildActionButton(
-                context,
-                icon: Icons.task_alt_rounded,
-                label: 'Add Task',
-                color: const Color.fromARGB(255, 197, 140, 227), 
-                onPressed: () {
-                  setState(() {
-                    tasksCompleted++;
-                    rewardPoints += 10;
-                    weeklyProgress[DateTime.now().weekday % 7] += 1;
-                  });
-                },
-              ),
+              const SizedBox(height: 32),
+              _buildActionButtons(),
             ],
           ),
         ),
       ),
     );
   }
+  
+  Widget _buildMetricsGrid() {
+    return GridView.count(
+      crossAxisCount: 3,
+      crossAxisSpacing: 12,
+      mainAxisSpacing: 12,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      children: [
+        _buildMetricCard('Study Hours', totalStudyHours.toString(), Icons.schedule, primaryColor),
+        _buildMetricCard('Tasks Done', tasksCompleted.toString(), Icons.task_alt, secondaryColor),
+        _buildMetricCard('Points', rewardPoints.toString(), Icons.star, accentColor),
+      ],
+    );
+  }
 
-  Widget _buildSummaryCard() {
+  Widget _buildMetricCard(String title, String value, IconData icon, Color color) {
     return Container(
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color.fromARGB(255, 220, 225, 230), width: 1), 
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.12),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              const Icon(Icons.insights_rounded, color: Color.fromARGB(255, 28, 109, 55), size: 24), // Steel Blue
-              const SizedBox(width: 8),
-              const Text(
-                'Progress Summary',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          _progressRow('Study Hours', totalStudyHours, Icons.hourglass_bottom_rounded, const Color.fromARGB(255, 90, 160, 255)), 
-          _progressRow('Tasks Done', tasksCompleted, Icons.check_circle_rounded, const Color.fromARGB(255, 120, 200, 120)), 
-          _progressRow('Points', rewardPoints, Icons.star_rounded, const Color.fromARGB(255, 225, 210, 52)),
-        ],
-      ),
-    );
-  }
-
-  Widget _progressRow(String title, int value, IconData icon, Color iconColor) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        children: [
-          Icon(icon, color: iconColor, size: 24),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              title,
-              style: const TextStyle(fontSize: 16, color: Colors.black),
+          Icon(icon, color: color, size: 28),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: color,
             ),
           ),
+          const SizedBox(height: 4),
           Text(
-            '$value',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+            title,
+            style: TextStyle(
+              fontSize: 12,
+              color: textSecondaryColor,
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.center,
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildActionButton(
-    BuildContext context, {
-    required IconData icon,
-    required String label,
-    required Color color,
-    required VoidCallback onPressed,
-  }) {
-    return ElevatedButton.icon(
-      icon: Icon(icon, size: 20),
-      label: Text(label),
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 2, // Subtle shadow for depth
-        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -165,23 +137,39 @@ class _ProgressTrackerPageState extends State<ProgressTrackerPage> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color.fromARGB(255, 220, 225, 230), width: 1), 
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Icon(Icons.analytics_rounded, color: Color.fromARGB(255, 70, 130, 180), size: 24),
-              const SizedBox(width: 8),
-              const Text(
+              Text(
                 'Weekly Progress',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: textPrimaryColor,
+                ),
+              ),
+              Text(
+                'Hours',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: textSecondaryColor,
+                ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
           SizedBox(
             height: 180,
             child: BarChart(
@@ -191,11 +179,11 @@ class _ProgressTrackerPageState extends State<ProgressTrackerPage> {
                 barTouchData: BarTouchData(
                   enabled: true,
                   touchTooltipData: BarTouchTooltipData(
-                    tooltipBgColor: const Color.fromARGB(255, 70, 130, 180),
+                    tooltipBgColor: primaryColor,
                     getTooltipItem: (group, groupIndex, rod, rodIndex) {
                       return BarTooltipItem(
                         '${rod.toY.toInt()} hr',
-                        const TextStyle(color: Colors.white, fontSize: 12),
+                        const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500),
                       );
                     },
                   ),
@@ -206,9 +194,12 @@ class _ProgressTrackerPageState extends State<ProgressTrackerPage> {
                       showTitles: true,
                       getTitlesWidget: (double value, _) {
                         const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-                        return Text(
-                          days[value.toInt() % 7],
-                          style: const TextStyle(color: Colors.black, fontSize: 12),
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Text(
+                            days[value.toInt() % 7],
+                            style: TextStyle(color: textSecondaryColor, fontSize: 12, fontWeight: FontWeight.w500),
+                          ),
                         );
                       },
                     ),
@@ -221,7 +212,7 @@ class _ProgressTrackerPageState extends State<ProgressTrackerPage> {
                         if (value % 2 == 0) {
                           return Text(
                             '${value.toInt()}',
-                            style: const TextStyle(color: Colors.black, fontSize: 12),
+                            style: TextStyle(color: textSecondaryColor, fontSize: 12, fontWeight: FontWeight.w500),
                           );
                         }
                         return const Text('');
@@ -237,8 +228,9 @@ class _ProgressTrackerPageState extends State<ProgressTrackerPage> {
                   drawHorizontalLine: true,
                   horizontalInterval: 2,
                   getDrawingHorizontalLine: (value) {
-                    return FlLine(color: const Color.fromARGB(255, 220, 225, 230), strokeWidth: 1); 
+                    return FlLine(color: const Color(0xFFF5F5F5), strokeWidth: 1); 
                   },
+                  drawVerticalLine: false,
                 ),
                 barGroups: weeklyProgress.asMap().entries.map((entry) {
                   int index = entry.key;
@@ -248,9 +240,17 @@ class _ProgressTrackerPageState extends State<ProgressTrackerPage> {
                     barRods: [
                       BarChartRodData(
                         toY: value,
-                        color: const Color.fromARGB(255, 206, 123, 215), 
-                        borderRadius: BorderRadius.circular(4),
-                        width: 14,
+                        color: primaryColor.withOpacity(0.7),
+                        width: 10,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(4),
+                          topRight: Radius.circular(4),
+                        ),
+                        backDrawRodData: BackgroundBarChartRodData(
+                          show: true,
+                          toY: 10,
+                          color: const Color(0xFFF5F5F5),
+                        ),
                       ),
                     ],
                   );
@@ -259,6 +259,65 @@ class _ProgressTrackerPageState extends State<ProgressTrackerPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildActionButtons() {
+    return Row(
+      children: [
+        Expanded(
+          child: _buildActionButton(
+            context,
+            icon: Icons.schedule,
+            label: 'Time Tracker',
+            color: primaryColor,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const TimeTrackerPage()),
+              );
+            },
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _buildActionButton(
+            context,
+            icon: Icons.task_alt,
+            label: 'Add Task',
+            color: secondaryColor,
+            onPressed: () {
+              setState(() {
+                tasksCompleted++;
+                rewardPoints += 10;
+                weeklyProgress[DateTime.now().weekday % 7] += 1;
+              });
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActionButton(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required Color color,
+    required VoidCallback onPressed,
+  }) {
+    return ElevatedButton.icon(
+      icon: Icon(icon, size: 18),
+      label: Text(label),
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        elevation: 0,
+        textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, letterSpacing: 0.5),
       ),
     );
   }
