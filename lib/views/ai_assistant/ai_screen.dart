@@ -4,12 +4,15 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'dart:math';
 
+
 class AIScreen extends StatefulWidget {
   const AIScreen({super.key});
+
 
   @override
   State<AIScreen> createState() => _AIScreenState();
 }
+
 
 class _AIScreenState extends State<AIScreen> {
   final TextEditingController _userInput = TextEditingController();
@@ -18,33 +21,33 @@ class _AIScreenState extends State<AIScreen> {
   bool _isLoading = false;
   bool _isDarkMode = false;
 
-  // api key from my mdmehedi4666424 account 2nd one after hugging face and other free api fails 
 
   final String apiKey = "AIzaSyCyQLP7BkeMAj7mSOj1wBnZycXDelsB8A0";
   final String apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
 
-// Some motivational quotes for people to get ingaged and out of distraction 
 
-final List<String> _motivationalQuotes = [
-  "The successful warrior is the average man, with laser-like focus. — Bruce Lee",
-  "Deep work is the ability to focus without distraction on a cognitively demanding task. — Cal Newport",
-  "It's not that I'm so smart, it's just that I stay with problems longer. — Albert Einstein",
-  "You will never reach your destination if you stop and throw stones at every dog that barks. — Winston Churchill",
-  "Focus on the journey, not the destination. Joy is found not in finishing an activity but in doing it. — Greg Anderson",
-  "Don't watch the clock; do what it does. Keep going. — Sam Levenson",
-  "The best way to predict your future is to create it. — Abraham Lincoln",
-  "Success is not final, failure is not fatal: It is the courage to continue that counts. — Winston Churchill",
-  "Your mind is a powerful thing. When you fill it with positive thoughts, your life will start to change. — Unknown",
-  "The difference between ordinary and extraordinary is that little extra. — Jimmy Johnson",
-  "Start where you are. Use what you have. Do what you can. — Arthur Ashe",
-  "The secret of getting ahead is getting started. — Mark Twain",
-  "The harder you work for something, the greater you'll feel when you achieve it. — Unknown",
-  "Discipline is choosing between what you want now and what you want most. — Abraham Lincoln",
-  "Knowledge is being aware of what you can do. Wisdom is knowing when not to do it. — Anonymous"
-];
-  
+  final List<String> _motivationalQuotes = [
+    "The successful warrior is the average man, with laser-like focus. — Bruce Lee",
+    "Deep work is the ability to focus without distraction on a cognitively demanding task. — Cal Newport",
+    "It's not that I'm so smart, it's just that I stay with problems longer. — Albert Einstein",
+    "You will never reach your destination if you stop and throw stones at every dog that barks. — Winston Churchill",
+    "Focus on the journey, not the destination. Joy is found not in finishing an activity but in doing it. — Greg Anderson",
+    "Don't watch the clock; do what it does. Keep going. — Sam Levenson",
+    "The best way to predict your future is to create it. — Abraham Lincoln",
+    "Success is not final, failure is not fatal: It is the courage to continue that counts. — Winston Churchill",
+    "Your mind is a powerful thing. When you fill it with positive thoughts, your life will start to change. — Unknown",
+    "The difference between ordinary and extraordinary is that little extra. — Jimmy Johnson",
+    "Start where you are. Use what you have. Do what you can. — Arthur Ashe",
+    "The secret of getting ahead is getting started. — Mark Twain",
+    "The harder you work for something, the greater you'll feel when you achieve it. — Unknown",
+    "Discipline is choosing between what you want now and what you want most. — Abraham Lincoln",
+    "Knowledge is being aware of what you can do. Wisdom is knowing when not to do it. — Anonymous",
+  ];
+
+
   late String _currentQuote;
-  
+
+
   @override
   void initState() {
     super.initState();
@@ -52,20 +55,23 @@ final List<String> _motivationalQuotes = [
     _randomizeQuote();
   }
 
+
   void _randomizeQuote() {
     final random = Random();
     _currentQuote = _motivationalQuotes[random.nextInt(_motivationalQuotes.length)];
   }
 
+
   void _addWelcomeMessage() {
     setState(() {
       _messages.add(Message(
-        isUser: false, 
-        message: "Hello! I'm your Learnly AI assistant. I can help you with productivity tips, study techniques, motivation, or answer any questions about deep work. How can I help you today?", 
-        date: DateTime.now()
+        isUser: false,
+        message: "Hello! I'm your Learnly AI assistant. I can help you with productivity tips, study techniques, motivation, or answer any questions about deep work. How can I help you today?",
+        date: DateTime.now(),
       ));
     });
   }
+
 
   void _toggleTheme() {
     setState(() {
@@ -73,9 +79,11 @@ final List<String> _motivationalQuotes = [
     });
   }
 
+
   Future<void> sendMessage() async {
     final message = _userInput.text.trim();
     if (message.isEmpty) return;
+
 
     setState(() {
       _messages.add(Message(isUser: true, message: message, date: DateTime.now()));
@@ -83,9 +91,9 @@ final List<String> _motivationalQuotes = [
       _isLoading = true;
     });
 
-    // Ai chatbot scroll button design 
 
     _scrollToBottom();
+
 
     try {
       final response = await http.post(
@@ -97,20 +105,25 @@ final List<String> _motivationalQuotes = [
           "contents": [
             {
               "parts": [
-                {"text": "You are Learnly AI, an assistant focused on helping users with productivity, motivation, deep work techniques, and distraction-free studying. Provide helpful, concise advice that encourages focus and effective learning. Now respond to this message: $message"}
+                {
+                  "text": "You are Learnly AI, an assistant focused on helping users with productivity, motivation, deep work techniques, and distraction-free studying. Provide helpful, concise advice that encourages focus and effective learning. Now respond to this message: $message"
+                }
               ]
             }
           ]
         }),
       );
 
+
       setState(() {
         _isLoading = false;
       });
 
+
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         String botReply;
+
 
         if (data is Map && data.containsKey("candidates") && data["candidates"] is List && data["candidates"].isNotEmpty) {
           botReply = data["candidates"][0]["content"]["parts"][0]["text"]?.trim() ?? "I don't know, sorry! Let me know if I can help with something else.";
@@ -119,6 +132,7 @@ final List<String> _motivationalQuotes = [
         } else {
           botReply = "I'm having trouble processing your request.";
         }
+
 
         setState(() {
           _messages.add(Message(isUser: false, message: botReply, date: DateTime.now()));
@@ -150,18 +164,18 @@ final List<String> _motivationalQuotes = [
         ));
       });
     }
-    
-    // Scrolling upto bottom method 
+
 
     _scrollToBottom();
   }
 
+
   void _scrollToBottom() {
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
           _scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
       }
@@ -169,231 +183,217 @@ final List<String> _motivationalQuotes = [
   }
 
 
-
   @override
   Widget build(BuildContext context) {
-    final primaryColor = _isDarkMode ? Color(0xFF7E57C2) : Color(0xFF5E35B1);
-    final backgroundColor = _isDarkMode 
-        ? [Color(0xFF1A1A2E), Color(0xFF16213E)]
-        : [Color(0xFFF3E5F5), Color(0xFFE1BEE7)];
-    final cardColor = _isDarkMode ? Color(0xFF262A56) : Colors.white;
-    final textColor = _isDarkMode ? Colors.white : Color(0xFF424242);
-    final secondaryTextColor = _isDarkMode ? Colors.grey[300] : Colors.grey[700];
-    final userBubbleColor = _isDarkMode ? Color(0xFF7E57C2) : Color(0xFF9575CD);
-    final inputBgColor = _isDarkMode ? Color(0xFF2C2C44) : Colors.grey[100]!;
-    final hintTextColor = _isDarkMode ? Colors.grey[400]! : Colors.grey[500]!;
-    final scaffoldBgColor = _isDarkMode ? Color(0xFF121212) : Colors.white;
-    final quoteBannerColor = _isDarkMode 
-        ? Color(0xFF362A84).withOpacity(0.95)
-        : Color(0xFF5E35B1).withOpacity(0.9);
-    final shadowColor = _isDarkMode ? Colors.black45 : Colors.black12;
+    
+    final Color primaryBackground = _isDarkMode ? const Color(0xFF1A1A2E) : const Color(0xFFF8F7FA);
+    final Color cardBackground = _isDarkMode ? const Color(0xFF2C2C44) : const Color(0xFFFFFFFF);
+    final Color headerBackground = _isDarkMode ? const Color(0xFF362A84) : const Color(0xFFE6E0F0);
+    final Color primaryAccent = const Color(0xFFB8E8E0); 
+    final Color secondaryAccent = const Color(0xFF8CCFC5); 
+    final Color primaryText = _isDarkMode ? const Color(0xFFFFFFFF) : const Color(0xFF000000);
+    final Color secondaryText = _isDarkMode ? const Color(0xFFB0B0B0) : const Color(0xFF333333);
+    final Color inputBackground = _isDarkMode ? const Color(0xFF2C2C44) : const Color(0xFFF8F7FA);
+    final Color shadowColor = _isDarkMode ? const Color(0xFF000000).withOpacity(0.2) : const Color(0xFF000000).withOpacity(0.05);
+
 
     return Scaffold(
-      backgroundColor: scaffoldBgColor,
+      backgroundColor: primaryBackground,
       appBar: AppBar(
+        backgroundColor: headerBackground,
+        elevation: 0,
         title: Text(
           "Learnly AI",
           style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+            color: primaryText,
             fontSize: 20,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'SFProDisplay',
           ),
         ),
         centerTitle: true,
-        backgroundColor: primaryColor,
-        elevation: 0,
         actions: [
           IconButton(
             icon: Icon(
-              _isDarkMode ? Icons.wb_sunny : Icons.nights_stay, 
-              color: Colors.white
+              _isDarkMode ? Icons.wb_sunny_outlined : Icons.nights_stay_outlined,
+              color: primaryText,
             ),
             onPressed: _toggleTheme,
             tooltip: _isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode",
           ),
         ],
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: backgroundColor,
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: Column(
-          children: [
-           
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-              decoration: BoxDecoration(
-                color: quoteBannerColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: shadowColor,
-                    blurRadius: 6,
-                    offset: Offset(0, 3),
+      body: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            decoration: BoxDecoration(
+              color: cardBackground,
+              boxShadow: [
+                BoxShadow(
+                  color: shadowColor,
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.lightbulb_outlined, color: primaryAccent, size: 22),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    _currentQuote,
+                    style: TextStyle(
+                      color: secondaryText,
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                      fontFamily: 'SFProDisplay',
+                    ),
                   ),
-                ],
-              ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.refresh_outlined, color: secondaryText, size: 20),
+                  onPressed: () {
+                    setState(() {
+                      _randomizeQuote();
+                    });
+                  },
+                  tooltip: "Show another quote",
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              controller: _scrollController,
+              padding: const EdgeInsets.all(16),
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                final message = _messages[index];
+                return MessageBubble(
+                  isUser: message.isUser,
+                  message: message.message,
+                  time: DateFormat('HH:mm').format(message.date),
+                  userBubbleColor: primaryAccent,
+                  aiBubbleColor: cardBackground,
+                  textColor: message.isUser ? cardBackground : primaryText,
+                  secondaryTextColor: secondaryText,
+                  isDarkMode: _isDarkMode,
+                );
+              },
+            ),
+          ),
+          if (_isLoading)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
               child: Row(
                 children: [
-                  Icon(Icons.lightbulb_outline, color: Colors.amber[300], size: 24),
-                  SizedBox(width: 14),
+                  SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(primaryAccent),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    "Thinking...",
+                    style: TextStyle(
+                      color: secondaryText,
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                      fontFamily: 'SFProDisplay',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: cardBackground,
+              boxShadow: [
+                BoxShadow(
+                  color: shadowColor,
+                  blurRadius: 4,
+                  offset: const Offset(0, -2),
+                ),
+              ],
+            ),
+            child: SafeArea(
+              child: Row(
+                children: [
                   Expanded(
-                    child: Text(
-                      _currentQuote,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontStyle: FontStyle.italic,
-                        letterSpacing: 0.2,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.refresh, color: Colors.white.withOpacity(0.7), size: 18),
-                    onPressed: () {
-                      setState(() {
-                        _randomizeQuote();
-                      });
-                    },
-                    tooltip: "Show another quote",
-                  ),
-                ],
-              ),
-            ),
-            // Chat area
-            Expanded(
-              child: ListView.builder(
-                controller: _scrollController,
-                padding: EdgeInsets.all(16),
-                itemCount: _messages.length,
-                itemBuilder: (context, index) {
-                  final message = _messages[index];
-                  return MessageBubble(
-                    isUser: message.isUser,
-                    message: message.message,
-                    time: DateFormat('HH:mm').format(message.date),
-                    userBubbleColor: userBubbleColor,
-                    aiBubbleColor: cardColor,
-                    textColor: message.isUser ? Colors.white : textColor,
-                    secondaryTextColor: secondaryTextColor!,
-                    isDarkMode: _isDarkMode,
-                  );
-                },
-              ),
-            ),
-
-
-            // Indicator design 
-
-            if (_isLoading)
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    SizedBox(width: 16),
-                    SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
-                      ),
-                    ),
-                    SizedBox(width: 12),
-                    Text(
-                      "Thinking...",
-                      style: TextStyle(
-                        color: _isDarkMode ? Colors.grey[300] : primaryColor,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            // Input area
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                color: _isDarkMode ? Color(0xFF1E1E30) : Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: shadowColor,
-                    blurRadius: 8,
-                    offset: Offset(0, -2),
-                  ),
-                ],
-              ),
-              child: SafeArea(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: inputBgColor,
-                          borderRadius: BorderRadius.circular(24),
-                          border: Border.all(
-                            color: _isDarkMode ? Colors.grey[800]! : Colors.grey[300]!
-                          ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: inputBackground,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: _isDarkMode ? const Color(0xFF3A3A50) : const Color(0xFFE6E0F0),
+                          width: 1,
                         ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                controller: _userInput,
-                                decoration: InputDecoration(
-                                  hintText: "Ask about productivity or studying...",
-                                  hintStyle: TextStyle(color: hintTextColor),
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                ),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: _isDarkMode ? Colors.white : Colors.black87,
-                                ),
-                                textCapitalization: TextCapitalization.sentences,
-                                onSubmitted: (_) => sendMessage(),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _userInput,
+                              decoration: InputDecoration(
+                                hintText: "Ask about productivity or studying...",
+                                hintStyle: TextStyle(color: secondaryText, fontFamily: 'SFProDisplay'),
+                                border: InputBorder.none,
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                               ),
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: primaryText,
+                                fontFamily: 'SFProDisplay',
+                              ),
+                              textCapitalization: TextCapitalization.sentences,
+                              onSubmitted: (_) => sendMessage(),
                             ),
-                            IconButton(
-                              icon: Icon(Icons.mic, color: primaryColor),
-                              onPressed: () {
-                                // Dummy voice input . need to implement further the logic
-                              },
-                            ),
-                          ],
-                        ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.mic_outlined, color: primaryAccent),
+                            onPressed: () {
+                              
+                            },
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(width: 8),
-                    MaterialButton(
-                      onPressed: sendMessage,
-                      shape: CircleBorder(),
-                      color: primaryColor,
-                      padding: EdgeInsets.all(14),
-                      elevation: 2,
-                      child: Icon(Icons.send, color: Colors.white),
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 8),
+                  MaterialButton(
+                    onPressed: sendMessage,
+                    shape: const CircleBorder(),
+                    color: primaryAccent,
+                    padding: const EdgeInsets.all(12),
+                    elevation: 0,
+                    child: Icon(Icons.send_outlined, color: cardBackground, size: 20),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
+
 
 class Message {
   final bool isUser;
   final String message;
   final DateTime date;
 
+
   Message({required this.isUser, required this.message, required this.date});
 }
+
 
 class MessageBubble extends StatelessWidget {
   final bool isUser;
@@ -404,6 +404,7 @@ class MessageBubble extends StatelessWidget {
   final Color textColor;
   final Color secondaryTextColor;
   final bool isDarkMode;
+
 
   const MessageBubble({
     Key? key,
@@ -417,57 +418,50 @@ class MessageBubble extends StatelessWidget {
     required this.isDarkMode,
   }) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
         top: 8.0,
         bottom: 8.0,
-        left: isUser ? 64.0 : 0,
-        right: isUser ? 0 : 64.0,
+        left: isUser ? 48.0 : 16.0,
+        right: isUser ? 16.0 : 48.0,
       ),
       child: Column(
         crossAxisAlignment: isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Container(
-            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             decoration: BoxDecoration(
               color: isUser ? userBubbleColor : aiBubbleColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(isUser ? 16 : 4),
-                topRight: Radius.circular(isUser ? 4 : 16),
-                bottomLeft: Radius.circular(16),
-                bottomRight: Radius.circular(16),
-              ),
+              borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: isDarkMode ? Colors.black26 : Colors.black.withOpacity(0.06),
-                  blurRadius: 5,
-                  offset: Offset(0, 3),
+                  color: isDarkMode ? const Color(0xFF000000).withOpacity(0.1) : const Color(0xFF000000).withOpacity(0.05),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  message,
-                  style: TextStyle(
-                    color: textColor,
-                    fontSize: 15,
-                    height: 1.4,
-                  ),
-                ),
-              ],
+            child: Text(
+              message,
+              style: TextStyle(
+                color: textColor,
+                fontSize: 15,
+                height: 1.4,
+                fontFamily: 'SFProDisplay',
+              ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
+            padding: const EdgeInsets.only(top: 4.0, left: 8.0, right: 8.0),
             child: Text(
               time,
               style: TextStyle(
-                fontSize: 11,
+                fontSize: 12,
                 color: secondaryTextColor,
+                fontFamily: 'SFProDisplay',
               ),
             ),
           ),
@@ -476,3 +470,4 @@ class MessageBubble extends StatelessWidget {
     );
   }
 }
+

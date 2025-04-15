@@ -1,136 +1,346 @@
 import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
-import 'pomodoro_timer.dart'; // Assuming PomodoroScreen is in pomodoro_timer.dart
-import 'distraction_blocker.dart'; // Add your DistractionBlocker widget
+import 'pomodoro_timer.dart';
+import 'distraction_blocker.dart';
 import '../focus_mode/progress_tracking.dart';
 import '../focus_mode/deadLine_buddy.dart';
 import 'challenge_yourself.dart';
 import '../focus_mode/to_do_list.dart';
-// Add your TaskManager widget
-// Add your ProgressTracking widget
+import 'challenge_yourself.dart';
+
 
 class DeepFocusScreen extends StatefulWidget {
   const DeepFocusScreen({Key? key}) : super(key: key);
+
 
   @override
   _DeepFocusScreenState createState() => _DeepFocusScreenState();
 }
 
-class _DeepFocusScreenState extends State<DeepFocusScreen> {
+
+class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProviderStateMixin {
+  
+  final Color primaryBackground = const Color(0xFFF5F5F5); 
+  final Color cardBackground = const Color(0xFFFFFFFF); 
+  final Color accentBackground = const Color(0xFFE8ECEF); 
+  final Color primaryButton = const Color(0xFF4A90E2); 
+  final Color secondaryButton = const Color(0xFFD3E4F9); 
+  final Color primaryText = const Color(0xFF1A1A1A);
+  final Color secondaryText = const Color(0xFF6B7280); 
+  final Color accentText = const Color(0xFF4A90E2); 
+
+
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCubic),
+    );
+    _scaleAnimation = Tween<double>(begin: 0.98, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
+    );
+    _animationController.forward();
+  }
+
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+
   final List<Map<String, dynamic>> _focusModules = [
     {
       'title': 'Pomodoro',
       'icon': Icons.timer,
-      'color': Colors.blueAccent,
-      'description': 'A timer to manage your focus sessions with short breaks.',
+      'description': 'Timed focus sessions.',
       'widget': const PomodoroScreen(),
     },
     {
       'title': 'Blocker',
       'icon': Icons.block,
-      'color': Colors.redAccent,
-      'description': 'Block distractions while you focus on your tasks.',
+      'description': 'Block distractions.',
       'widget': const DistractionBlocker(),
     },
-    
-    // {
-    //   'title': 'Tasks',
-    //   'icon': Icons.check_circle_outline,
-    //   'color': Colors.greenAccent,
-    //   'description': 'Manage and organize your daily tasks effectively.',
-    //   'widget': const TaskManager(),
-    // },
     {
       'title': 'Progress',
       'icon': Icons.show_chart,
-      'color': Colors.purpleAccent,
-      'description': 'Track your progress and review completed tasks.',
+      'description': 'Track your progress.',
       'widget': const ProgressTrackerPage(),
     },
-     {
-  'title': 'Deadline Buddy',
-  'icon': Icons.alarm_on, // You can change this to any icon you like!
-  'color': Colors.deepOrangeAccent, 
-  'description': 'Never miss a due date with smart reminders and alerts.',
-  'widget': const DeadLineBuddy(),
-},
-
-{
-  'title': 'Challenge Yourself',
-  'icon': Icons.star_border,
-  'color': Colors.blueAccent,
-  'description': 'Take on fun and engaging challenges to boost your focus and learning.',
-  'widget': const ChallengeYourself(),
-},
-
-{
-      'title': 'ToDoList',
+    {
+      'title': 'Deadline Buddy',
+      'icon': Icons.alarm_on,
+      'description': 'Smart reminders.',
+      'widget': const DeadLineBuddy(),
+    },
+    {
+      'title': 'Challenge',
+      'icon': Icons.star_border,
+      'description': 'Engaging focus tasks.',
+      'widget': const ChallengeYourself(),
+    },
+    {
+      'title': 'To-Do List',
       'icon': Icons.check_circle_outline,
-      'color': Colors.greenAccent,
-      'description': 'Manage and organize your daily tasks effectively.',
+      'description': 'Organize your tasks.',
       'widget': const ToDoList(),
     },
+   
+  //  {
+  // 'title': 'Modern Clock',
+  // 'icon': Icons.check_circle_outline,
+  // 'description': 'Organize your tasks.',
+  // 'widget': const ModernClockPage(),
+  // },
+
 
   ];
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Deep Focus'),
-        backgroundColor: AppColors.primary, // Assuming AppColors is defined
-      ),
-      body: ListView.builder(
-        itemCount: _focusModules.length,
-        itemBuilder: (context, index) {
-          final module = _focusModules[index];
-          return GestureDetector(
-            onTap: () {
-              // Navigate to the corresponding widget on tap
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => module['widget']),
-              );
-            },
-            child: Card(
-              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: module['color'],
-                      radius: 30,
-                      child: Icon(module['icon'], color: Colors.white, size: 30),
+      body: AnimatedBuilder(
+        animation: _animationController,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: _scaleAnimation.value,
+            child: Opacity(
+              opacity: _fadeAnimation.value,
+              child: Container(
+                color: primaryBackground, 
+                child: CustomScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  slivers: [
+                    SliverAppBar(
+                      backgroundColor: accentBackground, 
+                      elevation: 0,
+                      title: Text(
+                        'Deep Focus',
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w500,
+                          color: primaryText, 
+                          letterSpacing: 0.5,
+                          fontFamily: 'SFProDisplay',
+                        ),
+                      ),
+                      pinned: false,
+                      floating: true,
+                      centerTitle: false,
                     ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            module['title'],
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
+                        child: Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: cardBackground, 
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: primaryText.withOpacity(0.05),
+                                blurRadius: 10,
+                                spreadRadius: -2,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            module['description'],
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.black54,
-                            ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Focused Productivity',
+                                      style: TextStyle(
+                                        color: primaryText, 
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'SFProDisplay',
+                                      ),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Text(
+                                      'Tools for seamless work',
+                                      style: TextStyle(
+                                        color: secondaryText, 
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'SFProDisplay',
+                                      ),
+                                    ),
+                                    const SizedBox(height: 14),
+                                    GestureDetector(
+                                      onTap: () {},
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 14, vertical: 8),
+                                        decoration: BoxDecoration(
+                                          color: primaryButton,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Text(
+                                          'Start',
+                                          style: TextStyle(
+                                            color: cardBackground,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'SFProDisplay',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height: 44,
+                                width: 44,
+                                decoration: BoxDecoration(
+                                  color: secondaryButton,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.auto_awesome,
+                                  color: primaryText, 
+                                  size: 22,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                    const Icon(Icons.arrow_forward_ios, size: 16),
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      sliver: SliverToBoxAdapter(
+                        child: Text(
+                          'Your Tools',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: primaryText,
+                            fontFamily: 'SFProDisplay',
+                          ),
+                        ),
+                      ),
+                    ),
+                    SliverPadding(
+                      padding: const EdgeInsets.all(16),
+                      sliver: SliverGrid(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.88,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                        ),
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            final module = _focusModules[index];
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (_) => module['widget']),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: cardBackground, 
+                                  borderRadius: BorderRadius.circular(16),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: primaryText.withOpacity(0.05),
+                                      blurRadius: 8,
+                                      spreadRadius: -1,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(14.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: secondaryButton, 
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Icon(
+                                          module['icon'],
+                                          color: primaryText, 
+                                          size: 22,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        module['title'],
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          color: primaryText, 
+                                          fontFamily: 'SFProDisplay',
+                                        ),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Expanded(
+                                        child: Text(
+                                          module['description'],
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: secondaryText, 
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: 'SFProDisplay',
+                                          ),
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 5),
+                                        decoration: BoxDecoration(
+                                          color: primaryButton, 
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Text(
+                                          'Open',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: cardBackground, 
+                                            fontFamily: 'SFProDisplay',
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          childCount: _focusModules.length,
+                        ),
+                      ),
+                    ),
+                    const SliverToBoxAdapter(
+                      child: SizedBox(height: 20),
+                    ),
                   ],
                 ),
               ),
@@ -141,3 +351,4 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> {
     );
   }
 }
+

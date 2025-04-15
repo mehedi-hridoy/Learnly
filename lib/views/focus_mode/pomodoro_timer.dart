@@ -14,10 +14,10 @@ class PomodoroScreen extends StatefulWidget {
 class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProviderStateMixin {
   bool _isTimerRunning = false;
   bool _isPomodoroActive = true;
-  int _secondsRemaining = 25 * 60; // Default Pomodoro duration (25 minutes)
+  int _secondsRemaining = 25 * 60;
   int _pomodoroDuration = 25 * 60;
-  int _shortBreakDuration = 5 * 60; // Default short break duration (5 minutes)
-  int _longBreakDuration = 15 * 60; // Default long break duration (15 minutes)
+  int _shortBreakDuration = 5 * 60; 
+  int _longBreakDuration = 15 * 60; 
   int _completedPomodoros = 0;
   String _currentTimerType = "Pomodoro";
   Color _backgroundColor = const Color(0xFFF9F9FB);
@@ -25,7 +25,7 @@ class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProvid
   late AnimationController _animationController;
 
 
-  // Brand colors for modern UI
+  
   final Color _primaryColor = const Color(0xFF5E60CE);
   final Color _secondaryColor = const Color(0xFF64DFDF);
   final Color _pomodoroColor = const Color(0xFFFF5A5F);
@@ -91,11 +91,11 @@ class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProvid
         timer.cancel();
         _isTimerRunning = false;
        
-        // Handle timer completion
+       
         if (_currentTimerType == "Pomodoro") {
           _completedPomodoros++;
          
-          // After every 4 pomodoros, take a long break
+          
           if (_completedPomodoros % 4 == 0) {
             _switchToLongBreak();
           } else {
@@ -177,7 +177,7 @@ class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProvid
               _longBreakDuration = longBreak;
               _backgroundColor = color;
              
-              // Update current timer if needed
+             
               if (_currentTimerType == "Pomodoro") {
                 _secondsRemaining = _pomodoroDuration;
                 _animationController.duration = Duration(seconds: _pomodoroDuration);
@@ -230,7 +230,7 @@ class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProvid
           children: [
             SizedBox(height: 16),
            
-            // Timer Type Selection
+           
             Container(
               margin: EdgeInsets.symmetric(horizontal: 24),
               decoration: BoxDecoration(
@@ -258,7 +258,7 @@ class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProvid
            
             SizedBox(height: 40),
            
-            // Timer Circle Animation
+            
             Expanded(
               child: Center(
                 child: AspectRatio(
@@ -268,7 +268,7 @@ class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProvid
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        // Background Circle
+                        
                         Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -283,7 +283,7 @@ class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProvid
                           ),
                         ),
                        
-                        // Progress Circle
+                        
                         AnimatedBuilder(
                           animation: _animationController,
                           builder: (context, child) {
@@ -298,7 +298,7 @@ class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProvid
                           },
                         ),
                        
-                        // Timer Display
+                       
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -336,13 +336,13 @@ class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProvid
               ),
             ),
            
-            // Control Buttons
+           
             Container(
               margin: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Reset Button
+                 
                   _buildControlButton(
                     Icons.refresh_rounded,
                     Colors.white,
@@ -352,7 +352,7 @@ class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProvid
                   ),
                   SizedBox(width: 24),
                  
-                  // Play/Pause Button
+                  
                   _buildControlButton(
                     _isTimerRunning ? Icons.pause_rounded : Icons.play_arrow_rounded,
                     Colors.white,
@@ -363,7 +363,7 @@ class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProvid
                   ),
                   SizedBox(width: 24),
                  
-                  // Skip Button
+                 
                   _buildControlButton(
                     Icons.skip_next_rounded,
                     Colors.white,
@@ -386,12 +386,12 @@ class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProvid
               ),
             ),
            
-            // Pomodoro Counter and Progress Bar
+           
             Container(
               margin: EdgeInsets.only(bottom: 32, left: 24, right: 24),
               child: Column(
                 children: [
-                  // Session indicator
+                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(4, (index) {
@@ -484,7 +484,7 @@ class _PomodoroScreenState extends State<PomodoroScreen> with SingleTickerProvid
 }
 
 
-// Custom painter for the circle progress
+
 class CircleProgressPainter extends CustomPainter {
   final double progress;
   final Color color;
@@ -503,7 +503,6 @@ class CircleProgressPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = size.width / 2 - strokeWidth / 2;
    
-    // Draw background track
     final trackPaint = Paint()
       ..color = color.withOpacity(0.1)
       ..style = PaintingStyle.stroke
@@ -512,7 +511,7 @@ class CircleProgressPainter extends CustomPainter {
    
     canvas.drawCircle(center, radius, trackPaint);
    
-    // Draw the progress arc
+   
     final paint = Paint()
       ..color = color
       ..style = PaintingStyle.stroke
@@ -521,8 +520,8 @@ class CircleProgressPainter extends CustomPainter {
    
     canvas.drawArc(
       Rect.fromCircle(center: center, radius: radius),
-      -90 * (3.14159 / 180), // Start from top (negative 90 degrees in radians)
-      progress * 2 * 3.14159, // Full circle in radians * progress
+      -90 * (3.14159 / 180),
+      progress * 2 * 3.14159, 
       false,
       paint,
     );
@@ -568,15 +567,15 @@ class _PomodoroSettingsScreenState extends State<PomodoroSettingsScreen> {
   late Color _selectedColor;
 
 
-  // Modern color palette
+  
   List<Color> colorOptions = [
-    const Color(0xFFF9F9FB), // Light Gray
-    const Color(0xFFF0F4F8), // Ice Blue
-    const Color(0xFFFFF8E8), // Cream
-    const Color(0xFFF8F9FF), // Lavender Hint
-    const Color(0xFFFFF0F3), // Soft Pink
-    const Color(0xFFF0FFF4), // Mint Cream
-    const Color(0xFFFFF9DB), // Pale Yellow
+    const Color(0xFFF9F9FB), 
+    const Color(0xFFF0F4F8), 
+    const Color(0xFFFFF8E8), 
+    const Color(0xFFF8F9FF), 
+    const Color(0xFFFFF0F3), 
+    const Color(0xFFF0FFF4), 
+    const Color(0xFFFFF9DB), 
   ];
 
 
@@ -649,11 +648,11 @@ class _PomodoroSettingsScreenState extends State<PomodoroSettingsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Timer Durations
+              
               _buildSectionTitle("Timer Duration"),
               SizedBox(height: 24),
              
-              // Pomodoro Duration
+              
               _buildSliderSetting(
                 "Focus Session",
                 _secondsToMinutes(_pomodoroDuration),
@@ -669,7 +668,7 @@ class _PomodoroSettingsScreenState extends State<PomodoroSettingsScreen> {
              
               SizedBox(height: 32),
              
-              // Short Break Duration
+             
               _buildSliderSetting(
                 "Short Break",
                 _secondsToMinutes(_shortBreakDuration),
@@ -685,7 +684,7 @@ class _PomodoroSettingsScreenState extends State<PomodoroSettingsScreen> {
              
               SizedBox(height: 32),
              
-              // Long Break Duration
+              
               _buildSliderSetting(
                 "Long Break",
                 _secondsToMinutes(_longBreakDuration),
@@ -701,7 +700,7 @@ class _PomodoroSettingsScreenState extends State<PomodoroSettingsScreen> {
              
               SizedBox(height: 48),
              
-              // Color Options
+              
               _buildSectionTitle("Background Theme"),
               SizedBox(height: 24),
              
