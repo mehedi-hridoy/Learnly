@@ -1,6 +1,6 @@
 # Learnly: Your Personalized Focus & Productivity Companion
 
-![Splash Screen](assets/readme-assets/1.png)
+![Splash Screen](assets/readme-assets/1.jpg)
 
 ## Overview
 **Learnly** is a mobile productivity application designed to help students and professionals stay focused, track their progress, and minimize distractions. It integrates a variety of deep work tools like Pomodoro, stopwatch, clock, and custom challenges alongside a personalized AI chatbot assistant — all within an engaging and modern UI.
