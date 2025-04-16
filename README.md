@@ -12,11 +12,11 @@ This project is part of the **Mobile Application Lab Project** under the supervi
 ## 🌟 Features
 
 ### 🔐 Authentication & Onboarding
-![Login Screen](assets/readme-assets/2.png)
-![Login Screen](assets/readme-assets/3.png)
-![Signup Screen](assets/readme-assets/4.png)
-![Signup Screen](assets/readme-assets/5.png)
-![Signup with Google](assets/readme-assets/6.png)
+![Login Screen](assets/readme-assets/2.jpg)
+![Login Screen](assets/readme-assets/3.jpg)
+![Signup Screen](assets/readme-assets/4.jpg)
+![Signup Screen](assets/readme-assets/5.jpg)
+![Signup with Google](assets/readme-assets/6.jpg)
 - Secure login/signup with Google Authentication
 - Seamless onboarding experience
 
