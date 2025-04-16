@@ -7,33 +7,29 @@ import '../focus_mode/deadLine_buddy.dart';
 import 'challenge_yourself.dart';
 import '../focus_mode/to_do_list.dart';
 import 'challenge_yourself.dart';
-
+import 'modern_clock.dart';
 
 class DeepFocusScreen extends StatefulWidget {
   const DeepFocusScreen({Key? key}) : super(key: key);
-
 
   @override
   _DeepFocusScreenState createState() => _DeepFocusScreenState();
 }
 
-
-class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProviderStateMixin {
-  
-  final Color primaryBackground = const Color(0xFFF5F5F5); 
-  final Color cardBackground = const Color(0xFFFFFFFF); 
-  final Color accentBackground = const Color(0xFFE8ECEF); 
-  final Color primaryButton = const Color(0xFF4A90E2); 
-  final Color secondaryButton = const Color(0xFFD3E4F9); 
+class _DeepFocusScreenState extends State<DeepFocusScreen>
+    with SingleTickerProviderStateMixin {
+  final Color primaryBackground = const Color(0xFFF5F5F5);
+  final Color cardBackground = const Color(0xFFFFFFFF);
+  final Color accentBackground = const Color(0xFFE8ECEF);
+  final Color primaryButton = const Color(0xFF4A90E2);
+  final Color secondaryButton = const Color(0xFFD3E4F9);
   final Color primaryText = const Color(0xFF1A1A1A);
-  final Color secondaryText = const Color(0xFF6B7280); 
-  final Color accentText = const Color(0xFF4A90E2); 
-
+  final Color secondaryText = const Color(0xFF6B7280);
+  final Color accentText = const Color(0xFF4A90E2);
 
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
-
 
   @override
   void initState() {
@@ -43,7 +39,8 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
       duration: const Duration(milliseconds: 1000),
     );
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCubic),
+      CurvedAnimation(
+          parent: _animationController, curve: Curves.easeInOutCubic),
     );
     _scaleAnimation = Tween<double>(begin: 0.98, end: 1.0).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
@@ -51,13 +48,11 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
     _animationController.forward();
   }
 
-
   @override
   void dispose() {
     _animationController.dispose();
     super.dispose();
   }
-
 
   final List<Map<String, dynamic>> _focusModules = [
     {
@@ -78,12 +73,12 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
       'description': 'Track your progress.',
       'widget': const ProgressTrackerPage(),
     },
-    {
-      'title': 'Deadline Buddy',
-      'icon': Icons.alarm_on,
-      'description': 'Smart reminders.',
-      'widget': const DeadLineBuddy(),
-    },
+    // {
+    //   'title': 'Deadline Buddy',
+    //   'icon': Icons.alarm_on,
+    //   'description': 'Smart reminders.',
+    //   'widget': const DeadLineBuddy(),
+    // },
     {
       'title': 'Challenge',
       'icon': Icons.star_border,
@@ -96,17 +91,14 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
       'description': 'Organize your tasks.',
       'widget': const ToDoList(),
     },
-   
-  //  {
-  // 'title': 'Modern Clock',
-  // 'icon': Icons.check_circle_outline,
-  // 'description': 'Organize your tasks.',
-  // 'widget': const ModernClockPage(),
-  // },
 
-
+    {
+      'title': 'Modern Clock',
+      'icon': Icons.check_circle_outline,
+      'description': 'Organize your tasks.',
+      'widget': const ModernClockPage(),
+    },
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -119,19 +111,19 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
             child: Opacity(
               opacity: _fadeAnimation.value,
               child: Container(
-                color: primaryBackground, 
+                color: primaryBackground,
                 child: CustomScrollView(
                   physics: const BouncingScrollPhysics(),
                   slivers: [
                     SliverAppBar(
-                      backgroundColor: accentBackground, 
+                      backgroundColor: accentBackground,
                       elevation: 0,
                       title: Text(
                         'Deep Focus',
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.w500,
-                          color: primaryText, 
+                          color: primaryText,
                           letterSpacing: 0.5,
                           fontFamily: 'SFProDisplay',
                         ),
@@ -146,7 +138,7 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
                         child: Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: cardBackground, 
+                            color: cardBackground,
                             borderRadius: BorderRadius.circular(16),
                             boxShadow: [
                               BoxShadow(
@@ -166,7 +158,7 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
                                     Text(
                                       'Focused Productivity',
                                       style: TextStyle(
-                                        color: primaryText, 
+                                        color: primaryText,
                                         fontSize: 22,
                                         fontWeight: FontWeight.w600,
                                         fontFamily: 'SFProDisplay',
@@ -176,7 +168,7 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
                                     Text(
                                       'Tools for seamless work',
                                       style: TextStyle(
-                                        color: secondaryText, 
+                                        color: secondaryText,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                         fontFamily: 'SFProDisplay',
@@ -190,7 +182,8 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
                                             horizontal: 14, vertical: 8),
                                         decoration: BoxDecoration(
                                           color: primaryButton,
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                         child: Text(
                                           'Start',
@@ -215,7 +208,7 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
                                 ),
                                 child: Icon(
                                   Icons.auto_awesome,
-                                  color: primaryText, 
+                                  color: primaryText,
                                   size: 22,
                                 ),
                               ),
@@ -241,7 +234,8 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
                     SliverPadding(
                       padding: const EdgeInsets.all(16),
                       sliver: SliverGrid(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           childAspectRatio: 0.88,
                           crossAxisSpacing: 12,
@@ -254,12 +248,13 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (_) => module['widget']),
+                                  MaterialPageRoute(
+                                      builder: (_) => module['widget']),
                                 );
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: cardBackground, 
+                                  color: cardBackground,
                                   borderRadius: BorderRadius.circular(16),
                                   boxShadow: [
                                     BoxShadow(
@@ -273,17 +268,19 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
                                 child: Padding(
                                   padding: const EdgeInsets.all(14.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Container(
                                         padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
-                                          color: secondaryButton, 
-                                          borderRadius: BorderRadius.circular(10),
+                                          color: secondaryButton,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                         child: Icon(
                                           module['icon'],
-                                          color: primaryText, 
+                                          color: primaryText,
                                           size: 22,
                                         ),
                                       ),
@@ -293,7 +290,7 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
-                                          color: primaryText, 
+                                          color: primaryText,
                                           fontFamily: 'SFProDisplay',
                                         ),
                                       ),
@@ -303,7 +300,7 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
                                           module['description'],
                                           style: TextStyle(
                                             fontSize: 12,
-                                            color: secondaryText, 
+                                            color: secondaryText,
                                             fontWeight: FontWeight.w400,
                                             fontFamily: 'SFProDisplay',
                                           ),
@@ -315,15 +312,16 @@ class _DeepFocusScreenState extends State<DeepFocusScreen> with SingleTickerProv
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 10, vertical: 5),
                                         decoration: BoxDecoration(
-                                          color: primaryButton, 
-                                          borderRadius: BorderRadius.circular(8),
+                                          color: primaryButton,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         child: Text(
                                           'Open',
                                           style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w500,
-                                            color: cardBackground, 
+                                            color: cardBackground,
                                             fontFamily: 'SFProDisplay',
                                           ),
                                         ),
