@@ -1,6 +1,6 @@
 # Learnly: Your Personalized Focus & Productivity Companion
 
-![Splash Screen](assets/Readme Assets/1.png)
+![Splash Screen](assets/readme-assets/1.png)
 
 ## Overview
 **Learnly** is a mobile productivity application designed to help students and professionals stay focused, track their progress, and minimize distractions. It integrates a variety of deep work tools like Pomodoro, stopwatch, clock, and custom challenges alongside a personalized AI chatbot assistant — all within an engaging and modern UI.
@@ -12,62 +12,62 @@ This project is part of the **Mobile Application Lab Project** under the supervi
 ## 🌟 Features
 
 ### 🔐 Authentication & Onboarding
-![Login Screen](assets/Readme Assets/2.png)
-![Login Screen](assets/Readme Assets/3.png)
-![Signup Screen](assets/Readme Assets/4.png)
-![Signup Screen](assets/Readme Assets/5.png)
-![Signup with Google](assets/Readme Assets/6.png)
+![Login Screen](assets/readme-assets/2.png)
+![Login Screen](assets/readme-assets/3.png)
+![Signup Screen](assets/readme-assets/4.png)
+![Signup Screen](assets/readme-assets/5.png)
+![Signup with Google](assets/readme-assets/6.png)
 - Secure login/signup with Google Authentication
 - Seamless onboarding experience
 
 ### 🏠 Dashboard & Core Tools
-![Main Dashboard](assets/Readme Assets/7.png)
-![Deep Focus](assets/Readme Assets/8.png)
-![AI Assistant](assets/Readme Assets/9.png)
-![More Tools](assets/Readme Assets/10.png)
+![Main Dashboard](assets/readme-assets/7.png)
+![Deep Focus](assets/readme-assets/8.png)
+![AI Assistant](assets/readme-assets/9.png)
+![More Tools](assets/readme-assets/10.png)
 - Clean and intuitive dashboard
 - Deep Focus Zone (Pomodoro, stopwatch, etc.)
 - Built-in AI chatbot for personalized productivity support
 
 ### 👤 Profile & Customization
-![Profile](assets/Readme Assets/11_1.jpg)
-![Focus Timer Settings](assets/Readme Assets/12_1.jpg)
+![Profile](assets/readme-assets/11_1.jpg)
+![Focus Timer Settings](assets/readme-assets/12_1.jpg)
 - Profile management
 - Personalized focus timer configuration
 
 ### 📈 Progress Tracking
-![Progress Chart](assets/Readme Assets/13.png)
-![Session Summary](assets/Readme Assets/14.png)
+![Progress Chart](assets/readme-assets/13.png)
+![Session Summary](assets/readme-assets/14.png)
 - Track daily, weekly, and monthly study sessions
 - Visual insights and analytics
 
 ### ⏱️ Timer Tracker
-![Timer Tracker 1](assets/Readme Assets/15.png)
-![Timer Tracker 2](assets/Readme Assets/16.png)
+![Timer Tracker 1](assets/readme-assets/15.png)
+![Timer Tracker 2](assets/readme-assets/16.png)
 - Review past sessions
 - Monitor task completion time
 
 ### 🎯 Challenge Yourself
-![Challenge Screen 1](assets/Readme Assets/17.png)
-![Challenge Screen 2](assets/Readme Assets/18.png)
-![Challenge Screen 3](assets/Readme Assets/19.png)
-![Challenge Screen 4](assets/Readme Assets/20.png)
-![Challenge Screen 5](assets/Readme Assets/21.png)
+![Challenge Screen 1](assets/readme-assets/17.png)
+![Challenge Screen 2](assets/readme-assets/18.png)
+![Challenge Screen 3](assets/readme-assets/19.png)
+![Challenge Screen 4](assets/readme-assets/20.png)
+![Challenge Screen 5](assets/readme-assets/21.png)
 - Gamified productivity challenges
 - Set goals and push your limits
 
 ### ✅ To-do List & Daily Planner
-![To-do Screen 1](assets/Readme Assets/22.png)
-![To-do Screen 2](assets/Readme Assets/23.png)
-![To-do Screen 3](assets/Readme Assets/24.png)
-![To-do Screen 4](assets/Readme Assets/25.png)
+![To-do Screen 1](assets/readme-assets/22.png)
+![To-do Screen 2](assets/readme-assets/23.png)
+![To-do Screen 3](assets/readme-assets/24.png)
+![To-do Screen 4](assets/readme-assets/25.png)
 - Organize tasks
 - Prioritize focus sessions
 
 ### 🕰️ Modern Clock
-![Clock UI 1](assets/Readme Assets/26.png)
-![Clock UI 2](assets/Readme Assets/27.png)
-![Clock UI 3](assets/Readme Assets/28.png)
+![Clock UI 1](assets/readme-assets/26.png)
+![Clock UI 2](assets/readme-assets/27.png)
+![Clock UI 3](assets/readme-assets/28.png)
 - Aesthetic clock designs
 - Integrated with focus modes
 
