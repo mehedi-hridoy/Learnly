@@ -166,7 +166,7 @@ class _ChallengeYourselfState extends State<ChallengeYourself>
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Challenge saved for later!'),
-        backgroundColor: Colors.teal,
+        backgroundColor: Color.fromARGB(255, 198, 223, 220),
         duration: Duration(seconds: 1),
       ),
     );
@@ -194,16 +194,16 @@ class _ChallengeYourselfState extends State<ChallengeYourself>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0A3D33),
+      backgroundColor: const Color.fromARGB(255, 187, 216, 223),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text("Challenge Yourself", 
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontWeight: FontWeight.bold)),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.bar_chart, color: Colors.white),
+            icon: const Icon(Icons.bar_chart, color: Color.fromARGB(255, 38, 43, 7)),
             onPressed: () => _showStatsDialog(),
           ),
         ],
@@ -243,18 +243,18 @@ class _ChallengeYourselfState extends State<ChallengeYourself>
         Icon(
           Icons.emoji_events, 
           size: 120, 
-          color: Colors.tealAccent.withOpacity(0.7)
+          color: const Color.fromARGB(255, 2, 30, 29).withOpacity(0.7)
         ),
         const SizedBox(height: 20),
         const Text(
           "Push your limits. Discover your best self.",
-          style: TextStyle(color: Colors.white70, fontSize: 16),
+          style: TextStyle(color: Color.fromARGB(179, 14, 13, 13), fontSize: 17),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 30),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.tealAccent,
+            backgroundColor: const Color.fromARGB(255, 212, 219, 217),
             foregroundColor: Colors.black,
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
             shape: RoundedRectangleBorder(
@@ -277,7 +277,7 @@ class _ChallengeYourselfState extends State<ChallengeYourself>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: Colors.teal.withOpacity(0.2),
+              color: const Color.fromARGB(255, 9, 85, 77).withOpacity(0.2),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: Colors.tealAccent.withOpacity(0.3)),
             ),
@@ -374,7 +374,7 @@ class _ChallengeYourselfState extends State<ChallengeYourself>
                   icon: const Icon(Icons.play_arrow),
                   label: const Text("Start Now"),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: const Color.fromARGB(255, 88, 134, 89),
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
@@ -414,7 +414,7 @@ class _ChallengeYourselfState extends State<ChallengeYourself>
             Container(
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
-                color: Colors.teal.withOpacity(0.1),
+                color: const Color.fromARGB(255, 24, 152, 56).withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
               child: const Icon(Icons.access_time, size: 40, color: Colors.teal),
