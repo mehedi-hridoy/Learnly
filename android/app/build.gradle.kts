@@ -52,9 +52,9 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         //minSdk = flutter.minSdkVersion // this thing might need to be edited
-        minSdk = 24 // this thing might need to be edited
+        minSdk = 23 // this thing might need to be edited
         //targetSdk = flutter.targetSdkVersion
-        targetSdk = 24
+        targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }

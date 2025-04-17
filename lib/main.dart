@@ -17,7 +17,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,12 +44,12 @@ class MyApp extends StatelessWidget {
               ),
             );
           }
-          
+
           // User logged in
           if (snapshot.hasData) {
             return const HomeScreen();
           }
-          
+
           // User not logged in
           return const LoginScreen();
         },
