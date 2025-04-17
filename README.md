@@ -101,7 +101,8 @@ This project is part of the **Mobile Application Lab Project** under the supervi
 - **All Assets & Screenshots**: [Screenshots Drive Folder](https://drive.google.com/drive/folders/1AwcKSTUL756OO0ktv-CKdDhIF9sutbht)
 
 ---
-
+## 📎Learnly APK Release Version : 
+- **Download Link**: [Download from here](https://tinyurl.com/learnlyApp)
 ## 📲 Try Learnly
 Coming soon to Android and iOS platforms!
 
