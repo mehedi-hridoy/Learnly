@@ -277,14 +277,14 @@ class _ChallengeYourselfState extends State<ChallengeYourself>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 9, 85, 77).withOpacity(0.2),
+              color: const Color.fromARGB(255, 99, 55, 55).withOpacity(0.2),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: Colors.tealAccent.withOpacity(0.3)),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.local_fire_department, color: Colors.orange),
+                const Icon(Icons.local_fire_department, color: Color.fromARGB(255, 230, 193, 45)),
                 const SizedBox(width: 8),
                 Text(
                   "$streak day streak",
@@ -315,7 +315,7 @@ class _ChallengeYourselfState extends State<ChallengeYourself>
                 child: const Icon(
                   Icons.casino,
                   size: 60,
-                  color: Colors.tealAccent,
+                  color: Color.fromARGB(255, 173, 44, 12),
                 ),
               );
             },
@@ -374,7 +374,7 @@ class _ChallengeYourselfState extends State<ChallengeYourself>
                   icon: const Icon(Icons.play_arrow),
                   label: const Text("Start Now"),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 88, 134, 89),
+                    backgroundColor: const Color.fromARGB(255, 131, 192, 167),
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
