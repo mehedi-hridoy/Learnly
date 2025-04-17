@@ -123,34 +123,35 @@ flutter:
     - assets/icons/mid_chicken.png
     - assets/icons/mom_chicken.png
     - assets/logo/google.jpg
-    - assets/Readme Assets/1.png
-    - assets/Readme Assets/2.png
-    - assets/Readme Assets/3.png
-    - assets/Readme Assets/4.png
-    - assets/Readme Assets/5.png
-    - assets/Readme Assets/6.png
-    - assets/Readme Assets/7.png
-    - assets/Readme Assets/8.png
-    - assets/Readme Assets/9.png
-    - assets/Readme Assets/10.png
-    - assets/Readme Assets/11_1.jpg
-    - assets/Readme Assets/12_1.jpg
-    - assets/Readme Assets/13.png
-    - assets/Readme Assets/14.png
-    - assets/Readme Assets/15.png
-    - assets/Readme Assets/16.png
-    - assets/Readme Assets/17.png
-    - assets/Readme Assets/18.png
-    - assets/Readme Assets/19.png
-    - assets/Readme Assets/20.png
-    - assets/Readme Assets/21.png
-    - assets/Readme Assets/22.png
-    - assets/Readme Assets/23.png
-    - assets/Readme Assets/24.png
-    - assets/Readme Assets/25.png
-    - assets/Readme Assets/26.png
-    - assets/Readme Assets/27.png
-    - assets/Readme Assets/28.png
+    
+    - assets/readme-assets/1.jpg
+    - assets/readme-assets/2.jpg
+    - assets/readme-assets/3.jpg
+    - assets/readme-assets/4.jpg
+    - assets/readme-assets/5.jpg
+    - assets/readme-assets/6.jpg
+    - assets/readme-assets/7.png
+    - assets/readme-assets/8.png
+    - assets/readme-assets/9.png
+    - assets/readme-assets/10.png
+    - assets/readme-assets/11_1.jpg
+    - assets/readme-assets/12_1.jpg
+    - assets/readme-assets/13.png
+    - assets/readme-assets/14.png
+    - assets/readme-assets/15.png
+    - assets/readme-assets/16.png
+    - assets/readme-assets/17.png
+    - assets/readme-assets/18.png
+    - assets/readme-assets/19.png
+    - assets/readme-assets/20.png
+    - assets/readme-assets/21.png
+    - assets/readme-assets/22.png
+    - assets/readme-assets/23.png
+    - assets/readme-assets/24.png
+    - assets/readme-assets/25.png
+    - assets/readme-assets/26.png
+    - assets/readme-assets/27.png
+    - assets/readme-assets/28.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
