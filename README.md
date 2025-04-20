@@ -97,7 +97,7 @@ This project is part of the **Mobile Application Lab Project** under the supervi
 
 ## 📎 Useful Links
 - **Project Presentation**: [View Here](https://tinyurl.com/learnly)
-- **Project Report (PDF)**: [Google Drive](https://drive.google.com/file/d/1__KXJZbZSSlSvW7tGscSpaVFirws9dyq/view?usp=drive_link)
+- **Project Report (PDF)**: [Google Drive](https://tinyurl.com/learnly-report)
 - **All Assets & Screenshots**: [Screenshots Drive Folder](https://drive.google.com/drive/folders/1AwcKSTUL756OO0ktv-CKdDhIF9sutbht)
 
 ---
